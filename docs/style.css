@@ -64,3 +64,8 @@ img.pixel { image-rendering: pixelated; }
 .sci-m { font-family: var(--mono); font-size: 11px; color: var(--dim); margin: 3px 0 6px; }
 .sci p { font-size: 13px; margin: 0; line-height: 1.45; }
 #card button { margin-top: 6px; }
+
+#intro { position: fixed; left: 430px; right: 300px; top: 14px; z-index: 1000; background: rgba(17,20,27,.95);
+  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 14px;
+  font-size: 13px; line-height: 1.5; }
+#intro button { margin-left: 8px; padding: 3px 10px; }

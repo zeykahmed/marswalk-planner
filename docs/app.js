@@ -15,7 +15,7 @@ const PROFILES = [
 let ROVER, SITES = [];   // Perseverance data; SITES = sample locations grouped by position
 
 let G;                 // grid: {w,h,cell,elev,slope,haz,bounds}
-let map, habitat, targets = [], routes = [], selected = 'safe', mode = 'target';
+let map, habitat, targets = [], routes = [], selected = 'sci', mode = 'target';
 let returnTime = null, zoneLayer = null, routeLayers = [], turnMarker = null;
 const state = { budgetH: 4, radiusKm: 5 };
 
@@ -351,7 +351,7 @@ async function init() {
   habitat = L.marker([18.4447, 77.4508], { icon: pin('hab', '⌂'), draggable: true }).addTo(map)
     .bindTooltip('Habitat (Octavia E. Butler Landing)');
   habitat.on('dragend', recompute);
-  addTarget(L.latLng(18.4845, 77.4280));   // delta front (default demo target)
+  addTarget(L.latLng(18.4930, 77.4050));   // default demo target: top of the delta (routes clearly differ)
 
   map.on('click', e => {
     if (mode === 'habitat') { if (toIdx(e.latlng) >= 0) habitat.setLatLng(e.latlng); }
@@ -371,6 +371,7 @@ async function init() {
   document.getElementById('showZone').onchange = drawZone;
   document.getElementById('aboutLink').onclick = e => { e.preventDefault(); document.getElementById('about').classList.remove('hidden'); };
   document.getElementById('closeAbout').onclick = () => document.getElementById('about').classList.add('hidden');
+  document.getElementById('closeIntro').onclick = () => document.getElementById('intro').remove();
   recompute();
 }
 init();
