@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marswalk Planner · Jezero Crater</title>
+<link rel="stylesheet" href="lib/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+<aside id="panel">
+  <header>
+    <div class="brand">MARSWALK<span>PLANNER</span></div>
+    <div class="sub">Jezero Crater · 18.4°N 77.4°E · Team Atoll to Ares</div>
+  </header>
+
+  <section>
+    <h2>01 · Plan</h2>
+    <div class="modes">
+      <button data-mode="habitat" class="mode">⌂ Move habitat</button>
+      <button data-mode="target" class="mode active">✚ Add target</button>
+      <button id="clear">Clear targets</button>
+    </div>
+    <p class="hint" id="hint">Click the map to add science targets. The walk goes habitat → targets → habitat.</p>
+    <ol id="targets"></ol>
+  </section>
+
+  <section>
+    <h2>02 · Safety limits</h2>
+    <label>EVA time budget <b id="budgetV"></b>
+      <input type="range" id="budget" min="1" max="8" step="0.5" value="4"></label>
+    <label>Max distance from habitat <b id="radiusV"></b>
+      <input type="range" id="radius" min="1" max="10" step="0.5" value="5"></label>
+    <label class="check"><input type="checkbox" id="showZone" checked> Show safe-return zone</label>
+  </section>
+
+  <section>
+    <h2>03 · Route comparison</h2>
+    <div id="compare"><p class="hint">Add a target to compute routes.</p></div>
+    <canvas id="profile" width="340" height="120"></canvas>
+  </section>
+
+  <section>
+    <h2>04 · Science targets</h2>
+    <div id="card"><p class="hint">Click a ◆ Perseverance sample site for details. Sample locations = rover position on the sol the tube was sealed.</p></div>
+  </section>
+
+  <footer>Data: NASA/JPL-Caltech · MRO CTX · Mars 2020 Perseverance · USGS Astrogeology. <a href="#" id="aboutLink">About &amp; method</a></footer>
+</aside>
+
+<main id="map"></main>
+<div id="intro">
+  <b>Plan a safe Marswalk at Jezero Crater.</b> The habitat (⌂) sits at Perseverance's landing site.
+  Click the map to add science targets; the planner compares <span style="color:#ff7a3d">Fastest</span>,
+  <span style="color:#3ed6e0">Safest</span> and <span style="color:#b98cff">Most science</span> routes over real NASA terrain,
+  within your EVA time and distance limits. <button id="closeIntro">Got it</button>
+</div>
+
+<div id="about" class="modal hidden"><div class="card">
+  <h3>How it works</h3>
+  <p><b>Terrain.</b> A 20 m elevation model of Jezero (MRO CTX stereo, USGS) is turned into slope and roughness. Each 20 m cell gets a hazard class: easy &lt;8°, moderate 8–15°, difficult 15–25°, no-go &gt;25°.</p>
+  <p><b>Routing.</b> A* search finds the least-cost path across the grid. Cost = walking time from a Tobler hiking model (uphill and steep downhill are slower) × a hazard penalty that depends on the route profile.</p>
+  <p><b>Safety.</b> A reverse search from the habitat gives the return time from every cell. The safe-return zone shows where an astronaut can walk to and back within the EVA budget. The turn-back point is the last spot on the route where you can still get home in time.</p>
+  <p class="hint">Assumptions: suited walking speed = 60% of Earth Tobler speed; 20 m data misses boulders &lt;20 m. Not for real mission use.</p>
+  <button id="closeAbout">Close</button>
+</div></div>
+
+<script src="lib/leaflet.js"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>
