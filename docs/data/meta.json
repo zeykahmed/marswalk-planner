@@ -1,0 +1,20 @@
+{
+ "width": 787,
+ "height": 474,
+ "cell_m": 20.0,
+ "bounds": {
+  "west": 77.2,
+  "east": 77.48,
+  "south": 18.38,
+  "north": 18.54
+ },
+ "elev_min": -2620.720458984375,
+ "elev_max": -1650.635498046875,
+ "hazard_counts": [
+  262500,
+  72108,
+  36628,
+  1802
+ ],
+ "crs_note": "Mars sphere R=3396190.0 m, equirectangular; image pixels are linear in lon/lat"
+}
